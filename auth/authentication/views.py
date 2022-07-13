@@ -82,3 +82,30 @@ def set_new_password(request):
   serializer.is_valid(raise_exception = True)
   return Response({'success':True,'message':'Password reset  successfully'},status=status.HTTP_200_OK)
 
+@api_view(['POST'])
+@permission_classes((IsAuthenticated, ))
+def set_company (request):
+  serializer = SetCompanySerializer(data=request.data)
+  serializer.is_valid(raise_exception = True)
+  return Response({'success':True,'message':'Company set successfully'},status=status.HTTP_200_OK)
+
+@api_view(['POST'])
+@permission_classes((IsAuthenticated, ))
+def register_company (request):
+  serializer = RegisterCompanySerializer(data=request.data)
+  serializer.is_valid(raise_exception = True)
+  return Response({'success':True,'message':'Company set successfully'},status=status.HTTP_200_OK)
+
+@api_view(['PATCH'])
+@permission_classes((IsAuthenticated, ))
+def become_employer_request(request):
+    serializer = BecomeEmployerRequestSerializer(data=request.data)
+    serializer.is_valid(raise_exception = True);
+    return Response ('success')
+
+@api_view(['PATCH'])
+@permission_classes((IsAuthenticated, ))
+def activate_employer(request):
+    serializer = ActivateEmployerSerializer(data=request.data)
+    serializer.is_valid(raise_exception = True);
+    return Response ('success')
