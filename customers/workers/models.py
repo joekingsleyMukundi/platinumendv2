@@ -3,6 +3,7 @@ from employers.models import Office
 
 # Create your models here.
 class Worker (models.Model):
+  worker_id = models.IntegerField()
   username = models.CharField(max_length=200)
   email = models.EmailField()
   phone = models.CharField(max_length=200)
