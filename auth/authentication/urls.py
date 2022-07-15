@@ -16,4 +16,5 @@ urlpatterns = [
   path('auth/activate/employer/', views.activate_employer, name='activate_employer'),
   path('auth/register_company/',view.register_company, name='register_company'),
   path('auth/set_company/',views.set_company, name='set_company'),
+  path('auth/become_client/',views.become_client, name='become_client'),
 ]

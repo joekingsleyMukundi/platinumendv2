@@ -109,3 +109,10 @@ def activate_employer(request):
     serializer = ActivateEmployerSerializer(data=request.data)
     serializer.is_valid(raise_exception = True);
     return Response ('success')
+
+@api_view(['PATCH'])
+@permission_classes((IsAuthenticated, ))
+def become_client(request):
+    serializer = BecomeClientSerializer(data=request.data)
+    serializer.is_valid(raise_exception = True);
+    return Response ('success')

@@ -1,5 +1,5 @@
 from django.db import models
-from employers.models import Office
+import employers.models as employers
 
 # Create your models here.
 class Worker (models.Model):
@@ -36,7 +36,7 @@ class CurrentJobs (models.Model):
   created_at = models.DateTimeField(auto_now_add=True)
   status = models.CharField(max_length=255)
   worker = models.ForeignKey(Worker, on_delete=models.CASCADE)
-  office = models.ForeignKey(Office, on_delete=models.CASCADE)
+  office = models.ForeignKey(employers.Office, on_delete=models.CASCADE)
 
   def __str__(self):
     return self.title

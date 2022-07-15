@@ -148,3 +148,27 @@ class RegisterCompanySerializer (serializers.Serializer):
         except Exception as e:
             print(e)
             raise CustomInternalServerError('Internal Server Error')
+
+class BecomeClientSerializer(serializers.Serializer):
+    id = serializers.IntegerField(write_only=True)
+    email = serializers.EmailField(write_only=True)
+    class Meta:
+        fields = ['id','email']
+    def validate(self, attrs):
+        try:
+            id = attrs.get('id')
+            email = attrs.get('email')
+            if CustomUser.objects.filter(id=id).exists():
+                user = CustomUser.objects.get(id=id)
+                if user.email != email:
+                    raise ValidationError('email dont match')
+                user.role = 'client'
+                user.save()
+                subject = 'Role activation'
+                message = 'Welcome partner, your role has been activated. We are glad to add you to our esteemed clients'
+                send_custom_email(subject,message,user.email)
+                return user
+            raise ValidationError('user doesnot exist')
+        except Exception as e:
+            print(e)
+            raise CustomInternalServerError('Internal Server Error')
