@@ -1,0 +1,27 @@
+version: '3.8'
+services:
+  auth:
+    build:
+      context: ./auth
+      dockerfile: Dockerfile
+    command: python manage.py runserver 0.0.0.0:8080
+    ports:
+      - 8080:8080
+    volumes:
+      - ./auth:/usr/src/app
+    env_file:
+      - .env
+    depends_on:
+      - auth_db
+auth_db:
+  image: mysql:5.7
+  command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+  volumes:
+    - ./mysql/init:/docker-entrypoint-initdb.d
+    - ./mysql/db:/var/lib/mysql
+  environment:
+    MYSQL_ROOT_PASSWORD: root
+customers_db:
+  image: postgres:13.3
+  volumes:
+    - ./postgres/db:/var/lib/postgresql/data

@@ -16,7 +16,7 @@ class Client(models.Model):
         return self.name
 
 class Dashboard (models.Model):
-    client = models.ForeignKey(Client, on_delete=models.CASCADE)
+    client = models.OneToOneField(Client, on_delete=models.CASCADE)
     jobs_posted = models.IntegerField(default=0)
     amount_paid = models.IntegerField(default=0)
     completed_jobs = models.IntegerField(default=0)
