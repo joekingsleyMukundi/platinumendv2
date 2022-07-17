@@ -25,7 +25,6 @@ class CustomUser(AbstractUser):
 class Company (models.Model):
   id =  models.AutoField(primary_key=True)
   owner = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-  workers = ArrayField(models.ForeignKey(CustomUser, on_delete=models.CASCADE))
   name = models.CharField(max_length=255)
   email = models.EmailField(verbose_name='Email', max_length=60, unique=True)
   phone = models.CharField(max_length=255,null=True,blank=True)
