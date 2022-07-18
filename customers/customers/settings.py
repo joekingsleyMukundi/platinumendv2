@@ -80,12 +80,12 @@ WSGI_APPLICATION = 'customers.wsgi.application'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'customers',
-        'USER': 'postgres',
-        'PASSWORD': 'Mukundijoe254',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'writers_hub_customers',
+        'USER': 'root',
+        'HOST': 'auth_db',
+        'PORT': '3306',
+        'PASSWORD': 'root',
     }
 }
 

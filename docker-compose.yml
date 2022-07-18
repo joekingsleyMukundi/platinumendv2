@@ -28,6 +28,22 @@ services:
     volumes:
       - static:/static
 
+  customer:
+    build:
+      context: ./customer
+      dockerfile: Dockerfile
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./customer:/usr/src/app
+    # ports:
+    #   - 8000:8000
+    expose:
+      - 8000
+    env_file:
+      - .env
+    depends_on:
+      - auth_db
+
   auth_db:
     image: mysql:5.7
     command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
@@ -36,10 +52,5 @@ services:
       - ./mysql/db:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: root
-  customers_db:
-    image: postgres:13.3
-    volumes:
-      - ./postgres/db:/var/lib/postgresql/data
-
 volumes:
   static:
