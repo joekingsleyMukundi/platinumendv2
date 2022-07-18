@@ -7,12 +7,13 @@ from django.urls import reverse
 from .models import *
 from .errors import *
 from .mails import *
+from .producer import *
 
 class UserSerialiser(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
         fields = ['id', 'email',
-                  'username', 'phone', 'is_verified', 'is_active','role','company_name','role_status']
+                  'username', 'phone', 'is_verified', 'is_active','role','role_status']
 
 class ChangePasswordRequestSerializer(serializers.Serializer):
     email = serializers.EmailField(min_length = 2)
@@ -85,40 +86,13 @@ class ActivateEmployerSerializer(serializers.Serializer):
                 subject = 'Role activation'
                 message = 'Welcome partner, your role has been activated. We are glad to add you to our esteemed employers'
                 send_custom_email(subject,message,user.email)
+                publish('employer_activated',user)
                 return user
             raise ValidationError('user doesnot exist')
         except Exception as e:
             print(e)
             raise CustomInternalServerError('Internal Server Error')
 
-class SetCompanySerializer (serializers.Serializer):
-    id= serializers.IntegerField(write_only=True)
-    email = serializers.EmailField(write_only=True)
-    name = serializers.CharField(min_length = 200,write_only=True)
-
-    class Meta:
-        fields = ['id','email','name']
-    def validate(self, attrs):
-        try:
-            id = attrs.get('id')
-            email = attrs.get('email')
-            name = attrs.get('name')
-            if CustomUser.objects.filter(id=id).exists():
-                user = CustomUser.objects.get(id=id)
-                if user.email != email:
-                    raise ValidationError('email dont match')
-                if Company.objects.filter(name=name).exists():
-                    company = Company.objects.get(name=name)
-                    company.workers.add(user)
-                    subject = 'Company Set'
-                    message = 'Welcome ,you have saccessfully been added to the company'
-                    send_custom_email(subject,message,user.email)
-                    return user
-                raise ValidationError('company name does not exist')
-            raise ValidationError('user doesnot exist')
-        except Exception as e:
-            print(e)
-            raise CustomInternalServerError('Internal Server Error')
 
 
 class RegisterCompanySerializer (serializers.Serializer):
@@ -143,7 +117,9 @@ class RegisterCompanySerializer (serializers.Serializer):
                 subject = 'Company Set'
                 message = 'Welcome , your company has been set. We are glad to add you to our esteemed Partners'
                 send_custom_email(subject,message,user.email)
-                return user
+                print (company)
+                publish('company_set',company)
+                return Company
             raise ValidationError('user already exists')
         except Exception as e:
             print(e)
@@ -167,6 +143,7 @@ class BecomeClientSerializer(serializers.Serializer):
                 subject = 'Role activation'
                 message = 'Welcome partner, your role has been activated. We are glad to add you to our esteemed clients'
                 send_custom_email(subject,message,user.email)
+                publish('client_activated',user)
                 return user
             raise ValidationError('user doesnot exist')
         except Exception as e:

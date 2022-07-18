@@ -8,7 +8,7 @@ from .serializers import *
 from .models import CustomUser
 from .decorators import *
 from .errors import *
-from .producers import *
+from .producer import *
 
 # Create your views here.
 
@@ -50,14 +50,14 @@ def activate (request, uid, token):
     user.is_active = True
     try:
         user.save()
+        serializer = UserSerialiser(user, many=False)
         # publishing the message to the queue
-        publish('user_created', user)
+        publish('user_created', serializer.data)
+        return Response(serializer.data)
     except Exception as e:
         print(e)
         raise CustomInternalServerError(e)
     print('success')
-    serializer = UserSerialiser(user, many=False)
-    return Response(serializer.data)
 
 @api_view(['GET','POST'])
 def reset_password_request(request):
@@ -85,12 +85,6 @@ def set_new_password(request):
   serializer.is_valid(raise_exception = True)
   return Response({'success':True,'message':'Password reset  successfully'},status=status.HTTP_200_OK)
 
-@api_view(['POST'])
-@permission_classes((IsAuthenticated, ))
-def set_company (request):
-  serializer = SetCompanySerializer(data=request.data)
-  serializer.is_valid(raise_exception = True)
-  return Response({'success':True,'message':'Company set successfully'},status=status.HTTP_200_OK)
 
 @api_view(['POST'])
 @permission_classes((IsAuthenticated, ))
@@ -98,13 +92,6 @@ def register_company (request):
   serializer = RegisterCompanySerializer(data=request.data)
   serializer.is_valid(raise_exception = True)
   return Response({'success':True,'message':'Company set successfully'},status=status.HTTP_200_OK)
-
-@api_view(['PATCH'])
-@permission_classes((IsAuthenticated, ))
-def become_employer_request(request):
-    serializer = BecomeEmployerRequestSerializer(data=request.data)
-    serializer.is_valid(raise_exception = True);
-    return Response ('success')
 
 @api_view(['PATCH'])
 @permission_classes((IsAuthenticated, ))
@@ -119,3 +106,9 @@ def become_client(request):
     serializer = BecomeClientSerializer(data=request.data)
     serializer.is_valid(raise_exception = True);
     return Response ('success')
+
+@api_view(['GET'])
+def users(request):
+    users = CustomUser.objects.all()
+    serializer = UserSerialiser(users, many=True)
+    return Response(serializer.data)
