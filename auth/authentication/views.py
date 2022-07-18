@@ -8,6 +8,7 @@ from .serializers import *
 from .models import CustomUser
 from .decorators import *
 from .errors import *
+from .producers import *
 
 # Create your views here.
 
@@ -49,6 +50,8 @@ def activate (request, uid, token):
     user.is_active = True
     try:
         user.save()
+        # publishing the message to the queue
+        publish('user_created', user)
     except Exception as e:
         print(e)
         raise CustomInternalServerError(e)
