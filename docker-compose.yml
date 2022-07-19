@@ -20,6 +20,7 @@ services:
     restart: always
     depends_on:
       - auth
+      - customers
     build:
       context: ./nginx
       dockerfile: Dockerfile
@@ -28,13 +29,13 @@ services:
     volumes:
       - static:/static
 
-  customer:
+  customers:
     build:
-      context: ./customer
+      context: ./customers
       dockerfile: Dockerfile
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
-      - ./customer:/usr/src/app
+      - ./customers:/usr/src/app
     # ports:
     #   - 8000:8000
     expose:
