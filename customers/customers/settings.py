@@ -146,3 +146,9 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = os.getenv('EMAILHOSTUSER')
 EMAIL_HOST_PASSWORD = os.getenv('EMAILHOSTPASSWORD')
+
+# registerour custom error handler
+REST_FRAMEWORK = {
+    'EXCEPTION_HANDLER': 'utils.custom_error_handler.custom_error_handler',
+}
+
