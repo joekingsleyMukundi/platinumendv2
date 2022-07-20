@@ -31,7 +31,7 @@ class Activities(models.Model):
   def __str__(self):
     return self.activity
 
-class CurrentJobs (models.Model):
+class Jobs (models.Model):
   title = models.CharField(max_length=255)
   amount_payable = models.IntegerField(default=0)
   created_at = models.DateTimeField(auto_now_add=True)
@@ -41,15 +41,5 @@ class CurrentJobs (models.Model):
 
   def __str__(self):
     return self.title
-
-class LiveWallet (models.Model):
-  worker = models.ForeignKey(Worker, on_delete=models.CASCADE)
-  amount = models.IntegerField(default=0)
-  created_at = models.DateTimeField(auto_now_add=True)
-  updated_at = models.DateTimeField(auto_now=True)
-  status = models.CharField(max_length=255)
-
-  def __str__(self):
-    return self.worker.username
 
 
