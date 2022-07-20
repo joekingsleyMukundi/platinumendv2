@@ -149,6 +149,6 @@ EMAIL_HOST_PASSWORD = os.getenv('EMAILHOSTPASSWORD')
 
 # registerour custom error handler
 REST_FRAMEWORK = {
-    'EXCEPTION_HANDLER': 'utils.custom_error_handler.custom_error_handler',
+    'EXCEPTION_HANDLER': 'handlers.default_error_handler.custom_error_handler',
 }
 

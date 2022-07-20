@@ -26,13 +26,24 @@ class Dashboard(models.Model):
   hourly_rate = models.IntegerField(default=0)
   jobs_done = models.IntegerField(default=0)
   rehired_times = models.IntegerField(default=0)
-  skills = ArrayField(models.CharField(max_length=225))
-  attachments = ArrayField(models.CharField(max_length=225))
   created_at = models.DateTimeField(auto_now_add=True)
 
   def __str__(self):
     return self.name
 
+class Skills (models.Model):
+  freelancer = models.ForeignKey(Freelancer, on_delete=models.CASCADE)
+  skill = models.CharField(max_length=225)
+  def __str__(self):
+    return self.skill
+
+class Attachments(models.Model):
+  freelancer = models.ForeignKey(Freelancer, on_delete=models.CASCADE)
+  attachment = models.FileField(upload_to='attachments/')
+  created_at = models.DateTimeField(auto_now_add=True)
+
+  def __str__(self):
+    return self.attachment.name
 
 class FreelancerWallet(models.Model):
   freelancer = models.OneToOneField(Freelancer, on_delete=models.CASCADE)

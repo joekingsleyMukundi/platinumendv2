@@ -31,6 +31,16 @@ class CheckinSerializer (serializers.ModelSerializer):
     model = Checkin
     fields = '__all__'
 
+class AttachmentsSerializer (serializers.ModelSerializer):
+  class Meta:
+    model = Attachments
+    fields = '__all__'
+
+class SkillsSerializer (serializers.ModelSerializer):
+  class Meta:
+    model = Skills
+    fields = '__all__'
+
 class FreelancerSerializer (serializers.ModelSerializer):
   class Meta:
     model = Freelancer
@@ -53,3 +63,11 @@ class FreelancerSerializer (serializers.ModelSerializer):
       return serializer.data
     def get_checkin(self, obj):
      return CheckinSerializer(obj.checkin).data
+    def get_Attachments(self, obj):
+      attachments = obj.Attachments_set.all()
+      serializer = AttachmentsSerializer(attachments, many=True)
+      return serializer.data
+    def get_skills(self, obj):
+      skills = obj.Skills_set.all()
+      serializer = SkillsSerializer(skills, many=True)
+      return serializer.data

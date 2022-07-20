@@ -23,7 +23,7 @@ class CompanySerializer(serializers.ModelSerializer):
 
 class TransactionSerializer(serializers.ModelSerializer):
   class Meta:
-      model = Transaction
+      model = Transactions
       fields = '__all__'
 
 class EmployerSerializer(serializers.ModelSerializer):

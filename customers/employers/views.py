@@ -1,10 +1,10 @@
 from django.shortcuts import render
 from  rest_framework.response import Response
 from rest_framework.decorators import api_view
-from rest_framework.status import status
-from decorators.auth_decorator import 
-from .models import Dashboard
-from .serializers import DashboardSerializer
+from rest_framework import status
+from decorators.auth_decorators import authenticate_user
+from .models import *
+from .serializers import *
 from errors.custom_internal_server_error import InternalServerError
 
 # Create your views here.
