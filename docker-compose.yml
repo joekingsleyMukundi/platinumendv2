@@ -53,5 +53,15 @@ services:
       - ./mysql/db:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: root
+
+  consumer_queue:
+    build:
+      context: ./customers
+      dockerfile: Dockerfile
+    command: python message_queues/consumer.py
+    depends_on:
+      - auth_db
+    env_file:
+      - .env
 volumes:
   static:

@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Connect to RabbitMQ
-params = pika.URLParameters(os.environ['RABBITMQ_URL'])
+params = pika.URLParameters(os.getenv('RABBITMQ_URL'))
 connection = pika.BlockingConnection(params)
 channel = connection.channel()
 

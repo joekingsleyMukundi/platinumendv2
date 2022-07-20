@@ -109,6 +109,7 @@ def become_client(request):
 
 @api_view(['GET'])
 def users(request):
+    publish('employer_activated',{'message':'employer activated'})
     users = CustomUser.objects.all()
     serializer = UserSerialiser(users, many=True)
     return Response(serializer.data)
