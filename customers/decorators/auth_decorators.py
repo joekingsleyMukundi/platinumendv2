@@ -28,7 +28,7 @@ def authenticate_user(func):
       raise AuthenticationError('invalid token')
     # checking if the user exists
     username = payload['username']
-    if not users_model.objects.filter(username = username).exists():
+    if not Users.objects.filter(name = username).exists():
       raise AuthenticationError('user does not exist')
     # checking if the user is active
     is_active = payload['is_active']
