@@ -41,3 +41,14 @@ def get_transactions(request):
       return Response(serializer.data, status=status.HTTP_200_OK)
   except Exception as e:
     raise InternalServerError();
+
+@api_view(['GET'])
+@authenticate_user
+def get_profile(request):
+  user = request.user
+  try:
+      employer = Employer.objects.get(employer_id = user['id'])
+      serializer = EmployerSerializer(employer, many=False)
+      return Response(serializer.data, status=status.HTTP_200_OK)
+  except Exception as e:
+    raise InternalServerError();

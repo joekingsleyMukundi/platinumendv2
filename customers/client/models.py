@@ -25,22 +25,4 @@ class Dashboard (models.Model):
 
     def __str__(self):
       return self.client.name
-
-class Notifications (models.Model):
-    client = models.ForeignKey(Client, on_delete=models.CASCADE)
-    message = models.CharField(max_length=225)
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-      return self.client.name 
-
-
-class LiveOrders (models.Model):
-  client = models.ForeignKey(Client, on_delete=models.CASCADE)
-  job = models.CharField(max_length=225)
-  Freelancer = models.ForeignKey(Freelancer, on_delete=models.CASCADE)
-  created_at = models.DateTimeField(auto_now_add=True)
-
-  def __str__(self):
-    return self.client.name
     
