@@ -13,6 +13,7 @@ class Freelancer(models.Model):
         return self.name
 
 class Dashboard(models.Model):
+  freelancer = models.OneToOneField(Freelancer, on_delete=models.CASCADE)
   name = models.CharField(max_length=225)
   descriptiion = models.TextField()
   email = models.EmailField()
@@ -34,7 +35,7 @@ class Dashboard(models.Model):
 
 
 class FreelancerWallet(models.Model):
-  freelancer = models.ForeignKey(Freelancer, on_delete=models.CASCADE)
+  freelancer = models.OneToOneField(Freelancer, on_delete=models.CASCADE)
   amount = models.IntegerField(default=0)
   created_at = models.DateTimeField(auto_now_add=True)
   updated_at = models.DateTimeField(auto_now=True)

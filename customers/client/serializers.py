@@ -10,3 +10,6 @@ class ClientSerializer(serializers.ModelSerializer):
   class Meta:
       model = Client
       fields = '__all__'
+
+  def get_dashboard(self, obj):
+    return ClientDashboardSerializer(obj.dashboard).data
