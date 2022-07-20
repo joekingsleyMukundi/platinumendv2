@@ -7,21 +7,16 @@ class Freelancer(models.Model):
     name = models.CharField(max_length=225)
     email = models.EmailField()
     phone = models.CharField(max_length=225)
-    country = models.CharField(max_length=225)
     is_verified = models.BooleanField(default=False)
     def __str__(self):
         return self.name
 
 class Dashboard(models.Model):
   freelancer = models.OneToOneField(Freelancer, on_delete=models.CASCADE)
-  name = models.CharField(max_length=225)
-  descriptiion = models.TextField()
-  email = models.EmailField()
-  phone = models.CharField(max_length=225)
+  descriptiion = models.TextField(null= True, blank= True)
   rating = models.IntegerField(default=0)
-  country = models.CharField(max_length=225)
-  is_verified = models.BooleanField(default=False)
-  about = models.TextField()
+  country = models.CharField(max_length=225,default='Kenya')
+  about = models.TextField(null=True, blank=True)
   has_worked = models.BooleanField(default=False)
   hourly_rate = models.IntegerField(default=0)
   jobs_done = models.IntegerField(default=0)

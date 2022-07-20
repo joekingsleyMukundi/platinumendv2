@@ -7,7 +7,7 @@ class Employer (models.Model):
   username = models.CharField(max_length=200)
   email = models.EmailField()
   phone = models.CharField(max_length=200)
-  is_active = models.BooleanField(default=True)
+  is_verified = models.BooleanField(default=False)
 
 class Dashboard (models.Model):
   employer = models.OneToOneField(Employer, on_delete=models.CASCADE)
@@ -28,6 +28,7 @@ class Dashboard (models.Model):
 
 
 class Company (models.Model):
+  company_id = models.IntegerField()
   owner = models.ForeignKey(Employer, on_delete=models.CASCADE)
   name = models.CharField(max_length=255)
   email = models.EmailField(verbose_name='Email', max_length=60, unique=True)

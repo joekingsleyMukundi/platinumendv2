@@ -6,7 +6,7 @@ class Users (models.Model):
     name = models.CharField(max_length=225)
     email = models.EmailField()
     phone = models.CharField(max_length=225)
-    country = models.CharField(max_length=225)
+    country = models.CharField(max_length=225,default='Kenya')
     role = models.CharField(max_length=225)
     is_verified = models.BooleanField(default=False)
     is_active = models.BooleanField(default=False)
