@@ -9,7 +9,7 @@ class Client(models.Model):
     name = models.CharField(max_length=225)
     email = models.EmailField()
     phone = models.CharField(max_length=225)
-    country = models.CharField(max_length=225)
+    country = models.CharField(max_length=225, default='kenya')
     is_verified = models.BooleanField(default=False)
 
     def __str__(self):

@@ -40,7 +40,7 @@ class Company (models.Model):
 class Office (models.Model):
   company = models.ForeignKey(Company, on_delete=models.CASCADE)
   name = models.CharField(max_length=255)
-  workers = models.ForeignKey('workers.Worker', on_delete=models.CASCADE)
+  workers = models.ForeignKey('workers.Worker', on_delete=models.CASCADE, null=True, blank=True)
   office_category =  models.CharField(max_length=255)
   owed_amount = models.IntegerField(default=0)
   paid_amount = models.IntegerField(default=0)

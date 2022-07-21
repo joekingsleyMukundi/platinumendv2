@@ -27,15 +27,14 @@ def callback (ch, method, properties, body):
         employer = Employer.objects.create(employer_id=data['employer_id'], username=data['username'], email=data['email'], phone=data['phone'], is_verified=data['is_verified'])
         break;
       case 'company_set':
-        employer_id = data['employer_id']
+        employer_id = data['owner']['id']
         employer = Employer.objects.get(employer_id=employer_id)
         company = Company.objects.create(company_id=data['id'], owner=employer, name=data['name'], email=data['email'], phone=data['phone'])
         break;
       case 'client_activated':
-        client
+        client = Client.objects.create(client_id=data['client_id'], name=data['username'], email=data['email'], phone=data['phone'], is_verified=data['is_verified'])
+        break;
     }
-    
-
   except Exception as e:
     print(e)
     raise InternalServerError();
