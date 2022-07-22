@@ -58,9 +58,10 @@ services:
     build:
       context: ./customers
       dockerfile: Dockerfile
-    command: python message_queues/consumer.py
+    command: python consumer.py
     depends_on:
       - auth_db
+      - customers
     env_file:
       - .env
 volumes:

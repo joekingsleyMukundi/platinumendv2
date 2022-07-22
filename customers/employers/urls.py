@@ -7,7 +7,6 @@ urlpatterns = [
   path('company/<id>/', views.get_company, name='get_company'),
   path('transactions/', views.get_transactions, name='get_transactions'),
   path('profile/', views.get_profile, name='get_profile'),
-  path('profile/edit/', views.edit_profile, name='edit_profile'),
   path('company/<id>/add_office', views.create_office, name='add_office'),
   path('office/<office_id>', views.office, name='edit_office'),
   path('edit_office/<office_id>', views.office, name='edit_office'),
