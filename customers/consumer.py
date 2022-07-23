@@ -9,6 +9,7 @@ from users.models import Users
 from client.models import Client
 from employers.models import Employer, Company
 from dotenv import load_dotenv
+from errors.custom_internal_server_error import InternalServerError
 
 
 load_dotenv()
@@ -28,7 +29,7 @@ def callback(ch, method, properties, body):
     data = json.loads(body)
     try:
         if props=='user_created':
-            user = Users.objects.create(user_id=data['user_id'], name=data['username'], email=data['email'],
+            user = Users.objects.create(user_id=data['id'], name=data['username'], email=data['email'],
                                         phone=data['phone'], role=data['role'], is_verified=data['is_verified'],
                                         is_active=data['is_active'])
             return

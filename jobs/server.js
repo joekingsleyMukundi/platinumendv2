@@ -3,10 +3,12 @@ const bodyParser = require('body-parser')
 const mongoose = require('mongoose');
 const  app = express()
 
+const  workersUrl = require('./routes/worker/routes')
 
 app.use(bodyParser.json())
 
 
+app.use('/api/v1/jobs',workersUrl)
 
 // listen
 const port = 3000
