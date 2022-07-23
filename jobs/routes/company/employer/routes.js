@@ -6,7 +6,7 @@ router.post('/employers/disapprove/:id',(req,res,next)=>{
     message:'disapprove job'
   })
 })
-router.get('/employers/',(req,res,next)=>{
+router.get('/employers/list',(req,res,next)=>{
   res.status(200).json({
     message:'list job'
   })
