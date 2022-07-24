@@ -30,7 +30,7 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
 
-# Create your views here.
+# Create your v
 
 @api_view(['GET'])
 @user_not_active

@@ -2,6 +2,11 @@ const Job  = require('../../../models/company/job_model');
 exports.add_job = async(req, res, next) => {
   const workerId = req.user.id;
   const{jobTitle, platform, link, amount}=req.body;
+  const job = await Job.findOne({jobLink:link});
+  if (job) {
+    res.status(400).json({'error':'job already exists'});
+    return
+  }
   try {
     const job = new Job({
       workerid:workerId,
