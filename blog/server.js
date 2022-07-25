@@ -1,12 +1,12 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const  app = express()
-
+const blogUrl = require('./routes/blog_urls')
 const DatabaseConnect = require('./config/db_connect');
 
 app.use(bodyParser.json())
 
-app.use('/api/v1/blog',employersUrl)
+app.use('/api/v1/blog', blogUrl)
 
 // listen and connect 
 const PORT = 3030

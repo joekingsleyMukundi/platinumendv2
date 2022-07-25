@@ -59,6 +59,20 @@ services:
       - .env
     depends_on:
       - auth_db
+  blogs:
+    build:
+      context: ./blog
+      dockerfile: Dockerfile
+    volumes:
+      - ./blog:/usr/src/app
+    ports:
+      - 3030:3030
+    expose:
+      - 3030
+    env_file:
+      - .env
+    depends_on:
+      - auth_db
 
   auth_db:
     image: mysql:5.7
