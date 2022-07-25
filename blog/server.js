@@ -6,7 +6,7 @@ const DatabaseConnect = require('./config/db_connect');
 
 app.use(bodyParser.json())
 
-app.use('/api/v1/jobs',employersUrl)
+app.use('/api/v1/blog',employersUrl)
 
 // listen and connect 
 const PORT = 3030
