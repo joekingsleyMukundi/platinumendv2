@@ -23,16 +23,18 @@ class ChangePasswordRequestSerializer(serializers.Serializer):
 
     def validate(self, attrs):
         try:
+            print(attrs.get('email'))
             email = attrs.get('email')
             if CustomUser.objects.filter(email=email).exists():
                 user = CustomUser.objects.get(email=email)
+                user.email
                 uidb64 = urlsafe_base64_encode(smart_bytes(user.id))
                 token = PasswordResetTokenGenerator().make_token(user)
-                url = 'http://127.0.0.1:8000/auth/password_reset/uid='+uidb64+'/token='+token+'/'
+                url = 'http://127.0.0.1:3090/forgot-password/uid='+uidb64+'/token='+token+'/'
                 subject = 'Password reset'
                 message = 'You or someone else has initiated a password reset. if it was you click the link  to reset the password: '+url
-                send_mail_to_user(subject,message,user.email)
-                return attrs
+                send_mail_to_user(user,subject,message)
+                return user
             raise ValidationError('user doesnot exist')
         except Exception as e:
             print(e)
@@ -144,6 +146,31 @@ class BecomeClientSerializer(serializers.Serializer):
                 message = 'Welcome partner, your role has been activated. We are glad to add you to our esteemed clients'
                 send_custom_email(subject,message,user.email)
                 publish('client_activated',user)
+                return user
+            raise ValidationError('user doesnot exist')
+        except Exception as e:
+            print(e)
+            raise CustomInternalServerError('Internal Server Error')
+
+class UpdateDetailsSerializer(serializers.Serializer):
+    id = serializers.IntegerField(write_only=True)
+    name = serializers.CharField(min_length = 200,write_only=True)
+    email = serializers.EmailField(write_only=True)
+    phone = serializers.CharField(min_length = 10,write_only=True)
+    class Meta:
+        fields = ['name','email','phone','id']
+    def validate(self, attrs):
+        try:
+            id = attrs.get('id')
+            name = attrs.get('name')
+            email = attrs.get('email')
+            phone = attrs.get('phone')
+            if CustomUser.objects.filter(id=id).exists():
+                user = CustomUser.objects.get(id=id)
+                user.name = name
+                user.email = email
+                user.phone = phone
+                user.save()
                 return user
             raise ValidationError('user doesnot exist')
         except Exception as e:

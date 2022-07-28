@@ -62,6 +62,7 @@ def activate (request, uid, token):
 @api_view(['GET','POST'])
 def reset_password_request(request):
   if request.method == 'POST':
+    print(request.data)
     serializer = ChangePasswordRequestSerializer(data=request.data)
     serializer.is_valid(raise_exception = True);
     return Response ('success')
@@ -112,3 +113,11 @@ def users(request):
     users = CustomUser.objects.all()
     serializer = UserSerialiser(users, many=True)
     return Response(serializer.data)
+
+@api_view(['GET'])
+@permission_classes((IsAuthenticated, ))
+def update_users (request):
+    user = CustomUser.objects.get(id=id)
+    serializer = UpdateDetailsSerializer(data=request.data)
+    serializer.is_valid(raise_exception = True);
+    return Response ({'success':True,'message':'Details updated successfully'},status=status.HTTP_200_OK)

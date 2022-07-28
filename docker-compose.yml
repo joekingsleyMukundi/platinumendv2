@@ -21,6 +21,8 @@ services:
     depends_on:
       - auth
       - customers
+      - jobs
+      - blogs
     build:
       context: ./nginx
       dockerfile: Dockerfile
